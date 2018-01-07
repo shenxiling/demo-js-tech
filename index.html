@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script language="JavaScript">
+        function _aysncMethod1(){
+           let oPromise=new Promise(function(resolve,reject){
+                setTimeout(function () {
+                    console.log("_aysncMethod1 finish ok......");
+                    resolve("_aysncMethod1 finish result......")
+                },1000);
+           });
+           return oPromise;
+        }
+        function _aysncMethod2(){
+           let oPromise=new Promise(function(resolve,reject){
+                setTimeout(function () {
+                    console.log("_aysncMethod2 finish ok......");
+                    resolve("_aysncMethod2 finish result......")
+                },1000);
+           });
+           return oPromise;
+        }
+        function _aysncMethod3(){
+           let oPromise=new Promise(function(resolve,reject){
+                setTimeout(function () {
+                    console.log("_aysncMethod3 finish fail......");
+                    reject("_aysncMethod3 finish result......")
+                },1000);
+           });
+           return oPromise;
+        }
+        function onClick4PromisSuccess() {
+           _aysncMethod1().then(function (oResult) {
+               console.log(oResult);
+               return _aysncMethod2();
+           },function(oError){
+               console.log(oError);
+           }).then(function (oResult) {
+               console.log(oResult);
+               return "All end";
+           },function(oError){
+               console.log(oError);
+           }).then(function (oData) {
+               console.log(oData)
+           })
+        }
+        function onClick4PromisFail() {
+            _aysncMethod1().then(function (oResult) {
+                console.log(oResult);
+                return _aysncMethod3();
+            },function(oError){
+                console.log(oError);
+            }).then(function (oResult) {
+                console.log(oResult);
+                return "All end";
+            },function(oError){
+                console.log(oError);
+            }).then(function (oData) {
+                console.log(oData)
+            })
+        }
+        function onClick4PromisCatch() {
+           _aysncMethod1().then(function (oResult) {
+               console.log(oResult);
+               return _aysncMethod3();
+           }).then(function (oResult) {
+               console.log(oResult);
+               return "All end"
+           },function (oError) {
+               console.log(oError);
+               console.log(data)
+           }).then(function (oData) {
+               console.log(oData)
+           }).catch(function (reason) {
+               console.log(reason)
+           })
+        }
+        function onClick4PromisAll() {
+           Promise.all([_aysncMethod1(),_aysncMethod2(),_aysncMethod3()]).then(function (oResult) {
+               console.log(oResult);
+           },function (oError) {
+               console.log(oError);
+           })
+        }
+    </script>
+</head>
+<body>
+    <h1>异步问题</h1>
+    <button onclick="onClick4PromisSuccess()">promiseSuccess</button>
+    <button onclick="onClick4PromisFail()">promiseFail</button>
+    <button onclick="onClick4PromisCatch()">promiseCatch</button>
+    <button onclick="onClick4PromisAll()">promiseAll</button>
+</body>
+</html>
